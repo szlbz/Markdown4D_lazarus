@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <PathDelim Value="\"/>
+    <Name Value="markdown4d_lcl"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Markdown4D contributors"/>
+    <License Value="MIT"/>
+    <Description Value="Markdown viewer and source editor for Lazarus: TMarkdownViewer and TMarkdownEditor."/>
+    <Version Major="1" Minor="0" Release="1"/>
+    <Files Count="123">
+      <Item1>
+        <Filename Value="..\Source\Compat\Markdown4D.Compat.Hash.pas"/>
+        <UnitName Value="Compat\Markdown4D.Compat.Hash"/>
+        <IsPartOfProject Value="True"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\Source\Compat\Markdown4D.Compat.Http.pas"/>
+        <UnitName Value="Compat\Markdown4D.Compat.Http"/>
+        <IsPartOfProject Value="True"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\Source\Compat\Markdown4D.Compat.IOUtils.pas"/>
+        <UnitName Value="Compat\Markdown4D.Compat.IOUtils"/>
+        <IsPartOfProject Value="True"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\Source\Compat\Markdown4D.Compat.Json.pas"/>
+        <UnitName Value="Compat\Markdown4D.Compat.Json"/>
+        <IsPartOfProject Value="True"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\Source\Compat\Markdown4D.Compat.NetEncoding.pas"/>
+        <UnitName Value="Compat\Markdown4D.Compat.NetEncoding"/>
+        <IsPartOfProject Value="True"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\Source\Compat\Markdown4D.Compat.RegEx.pas"/>
+        <UnitName Value="Compat\Markdown4D.Compat.RegEx"/>
+        <IsPartOfProject Value="True"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\Source\Compat\Markdown4D.Compat.Str.pas"/>
+        <UnitName Value="Compat\Markdown4D.Compat.Str"/>
+        <IsPartOfProject Value="True"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\Source\Compat\Markdown4D.Compat.Threading.pas"/>
+        <UnitName Value="Compat\Markdown4D.Compat.Threading"/>
+        <IsPartOfProject Value="True"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\Source\Compat\Markdown4D.Compat.UITypes.pas"/>
+        <UnitName Value="Compat\Markdown4D.Compat.UITypes"/>
+        <IsPartOfProject Value="True"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\Source\Compat\Markdown4D.Compat.Url.pas"/>
+        <UnitName Value="Compat\Markdown4D.Compat.Url"/>
+        <IsPartOfProject Value="True"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\Source\Core\Markdown4D.Ast.Builder.pas"/>
+        <UnitName Value="Core\Markdown4D.Ast.Builder"/>
+        <IsPartOfProject Value="True"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\Source\Core\Markdown4D.Ast.Interfaces.pas"/>
+        <UnitName Value="Core\Markdown4D.Ast.Interfaces"/>
+        <IsPartOfProject Value="True"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\Source\Core\Markdown4D.Ast.pas"/>
+        <UnitName Value="Core\Markdown4D.Ast"/>
+        <IsPartOfProject Value="True"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\Source\Core\Markdown4D.Color.Names.pas"/>
+        <UnitName Value="Core\Markdown4D.Color.Names"/>
+        <IsPartOfProject Value="True"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\Source\Core\Markdown4D.Consts.pas"/>
+        <UnitName Value="Core\Markdown4D.Consts"/>
+        <IsPartOfProject Value="True"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\Source\Core\Markdown4D.Defines.pas"/>
+        <UnitName Value="Core\Markdown4D.Defines"/>
+        <IsPartOfProject Value="True"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\Source\Core\Markdown4D.Extensions.Alerts.pas"/>
+        <UnitName Value="Core\Markdown4D.Extensions.Alerts"/>
+        <IsPartOfProject Value="True"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\Source\Core\Markdown4D.Extensions.Chart.pas"/>
+        <UnitName Value="Core\Markdown4D.Extensions.Chart"/>
+        <IsPartOfProject Value="True"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\Source\Core\Markdown4D.Extensions.Gfm.pas"/>
+        <UnitName Value="Core\Markdown4D.Extensions.Gfm"/>
+        <IsPartOfProject Value="True"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\Source\Core\Markdown4D.Extensions.Interfaces.pas"/>
+        <UnitName Value="Core\Markdown4D.Extensions.Interfaces"/>
+        <IsPartOfProject Value="True"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\Source\Core\Markdown4D.Extensions.Math.pas"/>
+        <UnitName Value="Core\Markdown4D.Extensions.Math"/>
+        <IsPartOfProject Value="True"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\Source\Core\Markdown4D.Extensions.Mermaid.pas"/>
+        <UnitName Value="Core\Markdown4D.Extensions.Mermaid"/>
+        <IsPartOfProject Value="True"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\Source\Core\Markdown4D.Extensions.Sample.pas"/>
+        <UnitName Value="Core\Markdown4D.Extensions.Sample"/>
+        <IsPartOfProject Value="True"/>
+      </Item23>
+      <Item24>
+        <Filename Value="..\Source\Core\Markdown4D.Extensions.Toc.pas"/>
+        <UnitName Value="Core\Markdown4D.Extensions.Toc"/>
+        <IsPartOfProject Value="True"/>
+      </Item24>
+      <Item25>
+        <Filename Value="..\Source\Core\Markdown4D.Highlighter.Diff.pas"/>
+        <UnitName Value="Core\Markdown4D.Highlighter.Diff"/>
+        <IsPartOfProject Value="True"/>
+      </Item25>
+      <Item26>
+        <Filename Value="..\Source\Core\Markdown4D.Highlighter.Interfaces.pas"/>
+        <UnitName Value="Core\Markdown4D.Highlighter.Interfaces"/>
+        <IsPartOfProject Value="True"/>
+      </Item26>
+      <Item27>
+        <Filename Value="..\Source\Core\Markdown4D.Highlighter.Json.pas"/>
+        <UnitName Value="Core\Markdown4D.Highlighter.Json"/>
+        <IsPartOfProject Value="True"/>
+      </Item27>
+      <Item28>
+        <Filename Value="..\Source\Core\Markdown4D.Highlighter.LineScanner.pas"/>
+        <UnitName Value="Core\Markdown4D.Highlighter.LineScanner"/>
+        <IsPartOfProject Value="True"/>
+      </Item28>
+      <Item29>
+        <Filename Value="..\Source\Core\Markdown4D.Highlighter.Pascal.pas"/>
+        <UnitName Value="Core\Markdown4D.Highlighter.Pascal"/>
+        <IsPartOfProject Value="True"/>
+      </Item29>
+      <Item30>
+        <Filename Value="..\Source\Core\Markdown4D.Highlighter.Sql.pas"/>
+        <UnitName Value="Core\Markdown4D.Highlighter.Sql"/>
+        <IsPartOfProject Value="True"/>
+      </Item30>
+      <Item31>
+        <Filename Value="..\Source\Core\Markdown4D.Highlighter.TokenBuilder.pas"/>
+        <UnitName Value="Core\Markdown4D.Highlighter.TokenBuilder"/>
+        <IsPartOfProject Value="True"/>
+      </Item31>
+      <Item32>
+        <Filename Value="..\Source\Core\Markdown4D.Highlighter.Xml.pas"/>
+        <UnitName Value="Core\Markdown4D.Highlighter.Xml"/>
+        <IsPartOfProject Value="True"/>
+      </Item32>
+      <Item33>
+        <Filename Value="..\Source\Core\Markdown4D.Html.Entities.pas"/>
+        <UnitName Value="Core\Markdown4D.Html.Entities"/>
+        <IsPartOfProject Value="True"/>
+      </Item33>
+      <Item34>
+        <Filename Value="..\Source\Core\Markdown4D.Html.Subset.pas"/>
+        <UnitName Value="Core\Markdown4D.Html.Subset"/>
+        <IsPartOfProject Value="True"/>
+      </Item34>
+      <Item35>
+        <Filename Value="..\Source\Core\Markdown4D.Math.Chemistry.pas"/>
+        <UnitName Value="Core\Markdown4D.Math.Chemistry"/>
+        <IsPartOfProject Value="True"/>
+      </Item35>
+      <Item36>
+        <Filename Value="..\Source\Core\Markdown4D.Math.Syntax.pas"/>
+        <UnitName Value="Core\Markdown4D.Math.Syntax"/>
+        <IsPartOfProject Value="True"/>
+      </Item36>
+      <Item37>
+        <Filename Value="..\Source\Core\Markdown4D.Parser.Blocks.pas"/>
+        <UnitName Value="Core\Markdown4D.Parser.Blocks"/>
+        <IsPartOfProject Value="True"/>
+      </Item37>
+      <Item38>
+        <Filename Value="..\Source\Core\Markdown4D.Parser.HtmlBlocks.pas"/>
+        <UnitName Value="Core\Markdown4D.Parser.HtmlBlocks"/>
+        <IsPartOfProject Value="True"/>
+      </Item38>
+      <Item39>
+        <Filename Value="..\Source\Core\Markdown4D.Parser.Incremental.pas"/>
+        <UnitName Value="Core\Markdown4D.Parser.Incremental"/>
+        <IsPartOfProject Value="True"/>
+      </Item39>
+      <Item40>
+        <Filename Value="..\Source\Core\Markdown4D.Parser.Inlines.pas"/>
+        <UnitName Value="Core\Markdown4D.Parser.Inlines"/>
+        <IsPartOfProject Value="True"/>
+      </Item40>
+      <Item41>
+        <Filename Value="..\Source\Core\Markdown4D.Parser.Interfaces.pas"/>
+        <UnitName Value="Core\Markdown4D.Parser.Interfaces"/>
+        <IsPartOfProject Value="True"/>
+      </Item41>
+      <Item42>
+        <Filename Value="..\Source\Core\Markdown4D.Parser.LineReader.pas"/>
+        <UnitName Value="Core\Markdown4D.Parser.LineReader"/>
+        <IsPartOfProject Value="True"/>
+      </Item42>
+      <Item43>
+        <Filename Value="..\Source\Core\Markdown4D.Parser.LineScanner.pas"/>
+        <UnitName Value="Core\Markdown4D.Parser.LineScanner"/>
+        <IsPartOfProject Value="True"/>
+      </Item43>
+      <Item44>
+        <Filename Value="..\Source\Core\Markdown4D.Parser.LinkSyntax.pas"/>
+        <UnitName Value="Core\Markdown4D.Parser.LinkSyntax"/>
+        <IsPartOfProject Value="True"/>
+      </Item44>
+      <Item45>
+        <Filename Value="..\Source\Core\Markdown4D.Parser.References.pas"/>
+        <UnitName Value="Core\Markdown4D.Parser.References"/>
+        <IsPartOfProject Value="True"/>
+      </Item45>
+      <Item46>
+        <Filename Value="..\Source\Core\Markdown4D.Parser.SourceMap.pas"/>
+        <UnitName Value="Core\Markdown4D.Parser.SourceMap"/>
+        <IsPartOfProject Value="True"/>
+      </Item46>
+      <Item47>
+        <Filename Value="..\Source\Core\Markdown4D.Parser.StagingBlock.pas"/>
+        <UnitName Value="Core\Markdown4D.Parser.StagingBlock"/>
+        <IsPartOfProject Value="True"/>
+      </Item47>
+      <Item48>
+        <Filename Value="..\Source\Core\Markdown4D.Pipeline.Configuration.pas"/>
+        <UnitName Value="Core\Markdown4D.Pipeline.Configuration"/>
+        <IsPartOfProject Value="True"/>
+      </Item48>
+      <Item49>
+        <Filename Value="..\Source\Core\Markdown4D.Pipeline.pas"/>
+        <UnitName Value="Core\Markdown4D.Pipeline"/>
+        <IsPartOfProject Value="True"/>
+      </Item49>
+      <Item50>
+        <Filename Value="..\Source\Core\Markdown4D.Renderer.Html.pas"/>
+        <UnitName Value="Core\Markdown4D.Renderer.Html"/>
+        <IsPartOfProject Value="True"/>
+      </Item50>
+      <Item51>
+        <Filename Value="..\Source\Core\Markdown4D.Text.FileFormat.pas"/>
+        <UnitName Value="Core\Markdown4D.Text.FileFormat"/>
+        <IsPartOfProject Value="True"/>
+      </Item51>
+      <Item52>
+        <Filename Value="..\Source\Core\Markdown4D.Text.Unescape.pas"/>
+        <UnitName Value="Core\Markdown4D.Text.Unescape"/>
+        <IsPartOfProject Value="True"/>
+      </Item52>
+      <Item53>
+        <Filename Value="..\Source\Core\Markdown4D.Text.UrlSafety.pas"/>
+        <UnitName Value="Core\Markdown4D.Text.UrlSafety"/>
+        <IsPartOfProject Value="True"/>
+      </Item53>
+      <Item54>
+        <Filename Value="..\Source\Core\Markdown4D.Toc.pas"/>
+        <UnitName Value="Core\Markdown4D.Toc"/>
+        <IsPartOfProject Value="True"/>
+      </Item54>
+      <Item55>
+        <Filename Value="..\Source\Core\Markdown4D.Version.pas"/>
+        <UnitName Value="Core\Markdown4D.Version"/>
+        <IsPartOfProject Value="True"/>
+      </Item55>
+      <Item56>
+        <Filename Value="..\Source\Core\Markdown4D.Writer.Emphasis.pas"/>
+        <UnitName Value="Core\Markdown4D.Writer.Emphasis"/>
+        <IsPartOfProject Value="True"/>
+      </Item56>
+      <Item57>
+        <Filename Value="..\Source\Core\Markdown4D.Writer.Markdown.pas"/>
+        <UnitName Value="Core\Markdown4D.Writer.Markdown"/>
+        <IsPartOfProject Value="True"/>
+      </Item57>
+      <Item58>
+        <Filename Value="..\Source\Core\Markdown4D.pas"/>
+        <UnitName Value="Core\Markdown4D"/>
+        <IsPartOfProject Value="True"/>
+      </Item58>
+      <Item59>
+        <Filename Value="..\Source\Layout\Markdown4D.AutoScroll.Cursors.pas"/>
+        <UnitName Value="Layout\Markdown4D.AutoScroll.Cursors"/>
+        <IsPartOfProject Value="True"/>
+      </Item59>
+      <Item60>
+        <Filename Value="..\Source\Layout\Markdown4D.AutoScroll.Icon.pas"/>
+        <UnitName Value="Layout\Markdown4D.AutoScroll.Icon"/>
+        <IsPartOfProject Value="True"/>
+      </Item60>
+      <Item61>
+        <Filename Value="..\Source\Layout\Markdown4D.AutoScroll.pas"/>
+        <UnitName Value="Layout\Markdown4D.AutoScroll"/>
+        <IsPartOfProject Value="True"/>
+      </Item61>
+      <Item62>
+        <Filename Value="..\Source\Layout\Markdown4D.DesignSample.pas"/>
+        <UnitName Value="Layout\Markdown4D.DesignSample"/>
+        <IsPartOfProject Value="True"/>
+      </Item62>
+      <Item63>
+        <Filename Value="..\Source\Layout\Markdown4D.Editor.Actions.pas"/>
+        <UnitName Value="Layout\Markdown4D.Editor.Actions"/>
+        <IsPartOfProject Value="True"/>
+      </Item63>
+      <Item64>
+        <Filename Value="..\Source\Layout\Markdown4D.Editor.ContextMenu.pas"/>
+        <UnitName Value="Layout\Markdown4D.Editor.ContextMenu"/>
+        <IsPartOfProject Value="True"/>
+      </Item64>
+      <Item65>
+        <Filename Value="..\Source\Layout\Markdown4D.Editor.Folding.pas"/>
+        <UnitName Value="Layout\Markdown4D.Editor.Folding"/>
+        <IsPartOfProject Value="True"/>
+      </Item65>
+      <Item66>
+        <Filename Value="..\Source\Layout\Markdown4D.Editor.Highlighter.pas"/>
+        <UnitName Value="Layout\Markdown4D.Editor.Highlighter"/>
+        <IsPartOfProject Value="True"/>
+      </Item66>
+      <Item67>
+        <Filename Value="..\Source\Layout\Markdown4D.Editor.Highlights.pas"/>
+        <UnitName Value="Layout\Markdown4D.Editor.Highlights"/>
+        <IsPartOfProject Value="True"/>
+      </Item67>
+      <Item68>
+        <Filename Value="..\Source\Layout\Markdown4D.Editor.InlineStyle.pas"/>
+        <UnitName Value="Layout\Markdown4D.Editor.InlineStyle"/>
+        <IsPartOfProject Value="True"/>
+      </Item68>
+      <Item69>
+        <Filename Value="..\Source\Layout\Markdown4D.Editor.Keys.pas"/>
+        <UnitName Value="Layout\Markdown4D.Editor.Keys"/>
+        <IsPartOfProject Value="True"/>
+      </Item69>
+      <Item70>
+        <Filename Value="..\Source\Layout\Markdown4D.Editor.Model.pas"/>
+        <UnitName Value="Layout\Markdown4D.Editor.Model"/>
+        <IsPartOfProject Value="True"/>
+      </Item70>
+      <Item71>
+        <Filename Value="..\Source\Layout\Markdown4D.Editor.PreviewPacer.pas"/>
+        <UnitName Value="Layout\Markdown4D.Editor.PreviewPacer"/>
+        <IsPartOfProject Value="True"/>
+      </Item71>
+      <Item72>
+        <Filename Value="..\Source\Layout\Markdown4D.Editor.PreviewScroll.pas"/>
+        <UnitName Value="Layout\Markdown4D.Editor.PreviewScroll"/>
+        <IsPartOfProject Value="True"/>
+      </Item72>
+      <Item73>
+        <Filename Value="..\Source\Layout\Markdown4D.Editor.Rows.pas"/>
+        <UnitName Value="Layout\Markdown4D.Editor.Rows"/>
+        <IsPartOfProject Value="True"/>
+      </Item73>
+      <Item74>
+        <Filename Value="..\Source\Layout\Markdown4D.Extensions.Chart.BlockOverride.pas"/>
+        <UnitName Value="Layout\Markdown4D.Extensions.Chart.BlockOverride"/>
+        <IsPartOfProject Value="True"/>
+      </Item74>
+      <Item75>
+        <Filename Value="..\Source\Layout\Markdown4D.Extensions.Chart.Layout.pas"/>
+        <UnitName Value="Layout\Markdown4D.Extensions.Chart.Layout"/>
+        <IsPartOfProject Value="True"/>
+      </Item75>
+      <Item76>
+        <Filename Value="..\Source\Layout\Markdown4D.Extensions.Mermaid.BlockOverride.pas"/>
+        <UnitName Value="Layout\Markdown4D.Extensions.Mermaid.BlockOverride"/>
+        <IsPartOfProject Value="True"/>
+      </Item76>
+      <Item77>
+        <Filename Value="..\Source\Layout\Markdown4D.Extensions.Mermaid.Layout.pas"/>
+        <UnitName Value="Layout\Markdown4D.Extensions.Mermaid.Layout"/>
+        <IsPartOfProject Value="True"/>
+      </Item77>
+      <Item78>
+        <Filename Value="..\Source\Layout\Markdown4D.Image.Decoder.pas"/>
+        <UnitName Value="Layout\Markdown4D.Image.Decoder"/>
+        <IsPartOfProject Value="True"/>
+      </Item78>
+      <Item79>
+        <Filename Value="..\Source\Layout\Markdown4D.Image.Filters.pas"/>
+        <UnitName Value="Layout\Markdown4D.Image.Filters"/>
+        <IsPartOfProject Value="True"/>
+      </Item79>
+      <Item80>
+        <Filename Value="..\Source\Layout\Markdown4D.Image.Glyphs.Gdi.pas"/>
+        <UnitName Value="Layout\Markdown4D.Image.Glyphs.Gdi"/>
+        <IsPartOfProject Value="True"/>
+      </Item80>
+      <Item81>
+        <Filename Value="..\Source\Layout\Markdown4D.Image.Glyphs.pas"/>
+        <UnitName Value="Layout\Markdown4D.Image.Glyphs"/>
+        <IsPartOfProject Value="True"/>
+      </Item81>
+      <Item82>
+        <Filename Value="..\Source\Layout\Markdown4D.Image.Rasterizer.pas"/>
+        <UnitName Value="Layout\Markdown4D.Image.Rasterizer"/>
+        <IsPartOfProject Value="True"/>
+      </Item82>
+      <Item83>
+        <Filename Value="..\Source\Layout\Markdown4D.Image.Svg.Native.pas"/>
+        <UnitName Value="Layout\Markdown4D.Image.Svg.Native"/>
+        <IsPartOfProject Value="True"/>
+      </Item83>
+      <Item84>
+        <Filename Value="..\Source\Layout\Markdown4D.Image.Svg.Path.pas"/>
+        <UnitName Value="Layout\Markdown4D.Image.Svg.Path"/>
+        <IsPartOfProject Value="True"/>
+      </Item84>
+      <Item85>
+        <Filename Value="..\Source\Layout\Markdown4D.Image.Svg.Xml.pas"/>
+        <UnitName Value="Layout\Markdown4D.Image.Svg.Xml"/>
+        <IsPartOfProject Value="True"/>
+      </Item85>
+      <Item86>
+        <Filename Value="..\Source\Layout\Markdown4D.Image.Svg.pas"/>
+        <UnitName Value="Layout\Markdown4D.Image.Svg"/>
+        <IsPartOfProject Value="True"/>
+      </Item86>
+      <Item87>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.AlertIcons.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.AlertIcons"/>
+        <IsPartOfProject Value="True"/>
+      </Item87>
+      <Item88>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.BlockOverride.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.BlockOverride"/>
+        <IsPartOfProject Value="True"/>
+      </Item88>
+      <Item89>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.Defaults.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.Defaults"/>
+        <IsPartOfProject Value="True"/>
+      </Item89>
+      <Item90>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.Disclosure.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.Disclosure"/>
+        <IsPartOfProject Value="True"/>
+      </Item90>
+      <Item91>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.DisplayList.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.DisplayList"/>
+        <IsPartOfProject Value="True"/>
+      </Item91>
+      <Item92>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.Engine.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.Engine"/>
+        <IsPartOfProject Value="True"/>
+      </Item92>
+      <Item93>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.ExtensionCanvas.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.ExtensionCanvas"/>
+        <IsPartOfProject Value="True"/>
+      </Item93>
+      <Item94>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.HitTest.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.HitTest"/>
+        <IsPartOfProject Value="True"/>
+      </Item94>
+      <Item95>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.InlineHtml.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.InlineHtml"/>
+        <IsPartOfProject Value="True"/>
+      </Item95>
+      <Item96>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.Interfaces.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.Interfaces"/>
+        <IsPartOfProject Value="True"/>
+      </Item96>
+      <Item97>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.MeasureCache.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.MeasureCache"/>
+        <IsPartOfProject Value="True"/>
+      </Item97>
+      <Item98>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.Pointer.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.Pointer"/>
+        <IsPartOfProject Value="True"/>
+      </Item98>
+      <Item99>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.Primitives.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.Primitives"/>
+        <IsPartOfProject Value="True"/>
+      </Item99>
+      <Item100>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.Renderer.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.Renderer"/>
+        <IsPartOfProject Value="True"/>
+      </Item100>
+      <Item101>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.ResizePacer.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.ResizePacer"/>
+        <IsPartOfProject Value="True"/>
+      </Item101>
+      <Item102>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.SelectedMarkdown.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.SelectedMarkdown"/>
+        <IsPartOfProject Value="True"/>
+      </Item102>
+      <Item103>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.SourceLineMap.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.SourceLineMap"/>
+        <IsPartOfProject Value="True"/>
+      </Item103>
+      <Item104>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.SourceMapping.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.SourceMapping"/>
+        <IsPartOfProject Value="True"/>
+      </Item104>
+      <Item105>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.TextAnchor.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.TextAnchor"/>
+        <IsPartOfProject Value="True"/>
+      </Item105>
+      <Item106>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.TextSearch.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.TextSearch"/>
+        <IsPartOfProject Value="True"/>
+      </Item106>
+      <Item107>
+        <Filename Value="..\Source\Layout\Markdown4D.Layout.Zoom.pas"/>
+        <UnitName Value="Layout\Markdown4D.Layout.Zoom"/>
+        <IsPartOfProject Value="True"/>
+      </Item107>
+      <Item108>
+        <Filename Value="..\Source\Layout\Markdown4D.Math.Font.pas"/>
+        <UnitName Value="Layout\Markdown4D.Math.Font"/>
+        <IsPartOfProject Value="True"/>
+      </Item108>
+      <Item109>
+        <Filename Value="..\Source\Layout\Markdown4D.Math.Layout.pas"/>
+        <UnitName Value="Layout\Markdown4D.Math.Layout"/>
+        <IsPartOfProject Value="True"/>
+      </Item109>
+      <Item110>
+        <Filename Value="..\Source\Layout\Markdown4D.Theme.pas"/>
+        <UnitName Value="Layout\Markdown4D.Theme"/>
+        <IsPartOfProject Value="True"/>
+      </Item110>
+      <Item111>
+        <Filename Value="..\Source\Layout\Markdown4D.Viewer.Clicks.pas"/>
+        <UnitName Value="Layout\Markdown4D.Viewer.Clicks"/>
+        <IsPartOfProject Value="True"/>
+      </Item111>
+      <Item112>
+        <Filename Value="..\Source\Layout\Markdown4D.Viewer.ContextMenu.pas"/>
+        <UnitName Value="Layout\Markdown4D.Viewer.ContextMenu"/>
+        <IsPartOfProject Value="True"/>
+      </Item112>
+      <Item113>
+        <Filename Value="..\Source\Layout\Markdown4D.Viewer.ImageDownloader.pas"/>
+        <UnitName Value="Layout\Markdown4D.Viewer.ImageDownloader"/>
+        <IsPartOfProject Value="True"/>
+      </Item113>
+      <Item114>
+        <Filename Value="..\Source\Layout\Markdown4D.Viewer.ImageSettings.pas"/>
+        <UnitName Value="Layout\Markdown4D.Viewer.ImageSettings"/>
+        <IsPartOfProject Value="True"/>
+      </Item114>
+      <Item115>
+        <Filename Value="..\Source\Layout\Markdown4D.Viewer.Lifetime.pas"/>
+        <UnitName Value="Layout\Markdown4D.Viewer.Lifetime"/>
+        <IsPartOfProject Value="True"/>
+      </Item115>
+      <Item116>
+        <Filename Value="..\Source\Layout\Markdown4D.Viewer.Model.pas"/>
+        <UnitName Value="Layout\Markdown4D.Viewer.Model"/>
+        <IsPartOfProject Value="True"/>
+      </Item116>
+      <Item117>
+        <Filename Value="..\Source\Layout\Markdown4D.Viewer.ScrollBar.pas"/>
+        <UnitName Value="Layout\Markdown4D.Viewer.ScrollBar"/>
+        <IsPartOfProject Value="True"/>
+      </Item117>
+      <Item118>
+        <Filename Value="..\Source\Layout\Markdown4D.Viewer.Shared.pas"/>
+        <UnitName Value="Layout\Markdown4D.Viewer.Shared"/>
+        <IsPartOfProject Value="True"/>
+      </Item118>
+      <Item119>
+        <Filename Value="..\Source\Lcl\Markdown4D.Lcl.Editor.pas"/>
+        <UnitName Value="Lcl\Markdown4D.Lcl.Editor"/>
+        <IsPartOfProject Value="True"/>
+      </Item119>
+      <Item120>
+        <Filename Value="..\Source\Lcl\Markdown4D.Lcl.Images.pas"/>
+        <UnitName Value="Lcl\Markdown4D.Lcl.Images"/>
+        <IsPartOfProject Value="True"/>
+      </Item120>
+      <Item121>
+        <Filename Value="..\Source\Lcl\Markdown4D.Lcl.Painter.pas"/>
+        <UnitName Value="Lcl\Markdown4D.Lcl.Painter"/>
+        <IsPartOfProject Value="True"/>
+      </Item121>
+      <Item122>
+        <Filename Value="..\Source\Lcl\Markdown4D.Lcl.Register.pas"/>
+        <UnitName Value="Lcl\Markdown4D.Lcl.Register"/>
+        <IsPartOfProject Value="True"/>
+      </Item122>
+      <Item123>
+        <Filename Value="..\Source\Lcl\Markdown4D.Lcl.Viewer.pas"/>
+        <UnitName Value="Lcl\Markdown4D.Lcl.Viewer"/>
+        <IsPartOfProject Value="True"/>
+      </Item123>
+      <Item124>
+        <Filename Value="..\Source\Lcl\Markdown4D.Lcl.AutoScroll.pas"/>
+        <UnitName Value="Lcl\Markdown4D.Lcl.AutoScroll"/>
+        <IsPartOfProject Value="True"/>
+      </Item124>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <Target>
+        <Filename Value="markdown4d_lcl"/>
+      </Target>
+      <SearchPaths>
+        <IncludeFiles Value="$(ProjOutDir)"/>
+        <OtherUnitFiles Value="..\Source\Compat;..\Source\Core;..\Source\Layout;..\Source\Lcl"/>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <UseAnsiStrings Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
+      <CodeGeneration>
+        <SmartLinkUnit Value="True"/>
+        <Optimizations>
+          <OptimizationLevel Value="2"/>
+        </Optimizations>
+      </CodeGeneration>
+      <Linking>
+        <Debugging>
+          <DebugInfoType Value="dsAuto"/>
+        </Debugging>
+      </Linking>
+    </CompilerOptions>
+  </Package>
+</CONFIG>
