@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="markdown4d_view_demo.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="viewmainform.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ViewMainForm"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="200"/>
+        <CursorPos X="42" Y="223"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="2">
+      <Position>
+        <Filename Value="viewmainform.pas"/>
+        <Caret Line="212" Column="9" TopLine="193"/>
+      </Position>
+      <Position>
+        <Filename Value="viewmainform.pas"/>
+        <Caret Line="396" Column="28" TopLine="395"/>
+      </Position>
+      <Position>
+        <Filename Value="viewmainform.pas"/>
+        <Caret Line="48" Column="32" TopLine="34"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>
