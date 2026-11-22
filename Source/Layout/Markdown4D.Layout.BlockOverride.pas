@@ -1,0 +1,238 @@
+{$mode delphiunicode}{$modeswitch typeinquiry}
+{$modeswitch advancedrecords}{$modeswitch anonymousfunctions}
+{$modeswitch functionreferences}{$modeswitch implicitfunctionspecialization}
+{$WARN 5024 off}{$WARN 5090 off}{$WARN 5091 off}{$WARN 5057 off}
+unit Markdown4D.Layout.BlockOverride;
+
+{$SCOPEDENUMS ON}
+
+interface
+
+uses
+  Markdown4D.Ast.Interfaces,
+  Markdown4D.Extensions.Interfaces,
+  Markdown4D.Layout.Interfaces,
+  Markdown4D.Theme,
+  Markdown4D.Compat.Str,
+  character;
+
+type
+  IExtensionCanvas = interface
+    ['{4B9F1D62-8C07-4A53-9E21-3D6B0F5A7C84}']
+    function MeasureText(const Text: string; const Font: TMarkdownFontStyle): TLayoutSizeF;
+    procedure DrawText(const TopLeft: TLayoutPointF; const Text: string; const Font: TMarkdownFontStyle;
+      const Color: TLayoutColor);
+    procedure DrawLine(const StartPoint, EndPoint: TLayoutPointF; const Color: TLayoutColor; const StrokeWidth: Single);
+    procedure DrawDashedLine(const StartPoint, EndPoint: TLayoutPointF; const Color: TLayoutColor;
+      const StrokeWidth: Single);
+    procedure FillRectangle(const Bounds: TLayoutRectF; const Color: TLayoutColor);
+    procedure DrawRectangle(const Bounds: TLayoutRectF; const StrokeColor: TLayoutColor; const StrokeWidth: Single);
+    procedure FillAndStrokeRectangle(const Bounds: TLayoutRectF; const FillColor, StrokeColor: TLayoutColor;
+      const StrokeWidth: Single);
+    procedure FillPolygon(const Points: TArray<TLayoutPointF>; const Color: TLayoutColor);
+    procedure DrawPolygon(const Points: TArray<TLayoutPointF>; const StrokeColor: TLayoutColor;
+      const StrokeWidth: Single);
+    procedure FillAndStrokePolygon(const Points: TArray<TLayoutPointF>; const FillColor, StrokeColor: TLayoutColor;
+      const StrokeWidth: Single);
+    procedure FillWedge(const Center: TLayoutPointF; const OuterRadius, InnerRadius, StartAngle, SweepAngle: Single;
+      const Color: TLayoutColor);
+    procedure DrawWedge(const Center: TLayoutPointF; const OuterRadius, InnerRadius, StartAngle, SweepAngle: Single;
+      const StrokeColor: TLayoutColor; const StrokeWidth: Single);
+    procedure FillAndStrokeWedge(const Center: TLayoutPointF; const OuterRadius, InnerRadius, StartAngle,
+      SweepAngle: Single; const FillColor, StrokeColor: TLayoutColor; const StrokeWidth: Single);
+    procedure DrawImage(const Bounds: TLayoutRectF; const Source, AltText: string);
+    procedure SaveState;
+    procedure SetClip(const Bounds: TLayoutRectF);
+    procedure RestoreState;
+  end;
+
+  // A canvas that can attribute what is drawn to a link. What is drawn
+  // between BeginLink and EndLink is clickable as that link in the viewer; a
+  // canvas without this interface draws it as plain content. Links nest: the
+  // innermost one applies.
+  IExtensionLinkCanvas = interface
+    ['{515A1107-F4A0-4D43-8E38-6BC92CA52014}']
+    procedure BeginLink(const Url: string);
+    procedure EndLink;
+  end;
+
+  ILayoutBlockContext = interface
+    ['{5E1A7C34-9B62-4D08-A5F1-72C0E4B36D91}']
+    function GetMeasurer: ITextMeasurer;
+    function GetTheme: TMarkdownTheme;
+    function GetWidth: Single;
+    function GetCanvas: IExtensionCanvas;
+    property Measurer: ITextMeasurer read GetMeasurer;
+    property Theme: TMarkdownTheme read GetTheme;
+    property Width: Single read GetWidth;
+    property Canvas: IExtensionCanvas read GetCanvas;
+  end;
+
+  ILayoutBlockOverride = interface
+    ['{A0D46F17-3C85-4E29-8B60-91F5D2A7C438}']
+    function GetName: string;
+    function Handles(const Node: IMarkdownNode): Boolean;
+    function LayoutBlock(const Node: IMarkdownNode; const Top: Single; const Context: ILayoutBlockContext): Single;
+    property Name: string read GetName;
+  end;
+
+  TLayoutBlockOverrideRegistry = class
+  private
+    type
+      TRegistration = record
+        Handler: ILayoutBlockOverride;
+        Priority: Integer;
+        Ordinal: Integer;
+      end;
+    class var
+      FRegistrations: TArray<TRegistration>;
+      FNextOrdinal: Integer;
+
+  public
+    class procedure Register(const Handler: ILayoutBlockOverride; const Priority: Integer);
+    class function TryFind(const Node: IMarkdownNode; out Handler: ILayoutBlockOverride): Boolean;
+    class function IsRegistered(const Name: string; const Priority: Integer): Boolean;
+    class procedure Clear;
+  end;
+
+  TLayoutDocumentProcessorRegistry = class
+  private
+    type
+      TRegistration = record
+        Name: string;
+        Processor: IMarkdownDocumentProcessor;
+      end;
+    class var
+      FRegistrations: TArray<TRegistration>;
+    class procedure RunProcessor(const Registration: TRegistration; const Document: IMarkdownDocument;
+      const Errors: IMarkdownExtensionErrorSink);
+
+  public
+    // The name tells a host which extension failed.
+    class procedure Register(const Name: string; const Processor: IMarkdownDocumentProcessor);
+    // With Errors, a processor that raises is reported and skipped; without,
+    // the exception reaches the caller.
+    class procedure Process(const Document: IMarkdownDocument; const Errors: IMarkdownExtensionErrorSink = nil);
+    class procedure Clear;
+  end;
+
+implementation
+
+uses
+  SysUtils;
+
+class procedure TLayoutBlockOverrideRegistry.Register(const Handler: ILayoutBlockOverride; const Priority: Integer);
+var
+  Registration: TRegistration;
+begin
+  Registration := Default(TRegistration);
+  Registration.Handler := Handler;
+  Registration.Priority := Priority;
+  Registration.Ordinal := FNextOrdinal;
+  Inc(FNextOrdinal);
+
+  FRegistrations := FRegistrations + [Registration];
+end;
+
+class function TLayoutBlockOverrideRegistry.TryFind(const Node: IMarkdownNode;
+  out Handler: ILayoutBlockOverride): Boolean;
+var
+  BestIndex: Integer;
+  Index: Integer;
+  Wins: Boolean;
+begin
+  Handler := nil;
+
+  BestIndex := -1;
+  for Index := 0 to High(FRegistrations) do
+  begin
+    if not FRegistrations[Index].Handler.Handles(Node) then
+      Continue;
+
+    Wins := (BestIndex < 0) or (FRegistrations[Index].Priority > FRegistrations[BestIndex].Priority) or
+      ((FRegistrations[Index].Priority = FRegistrations[BestIndex].Priority) and
+      (FRegistrations[Index].Ordinal < FRegistrations[BestIndex].Ordinal));
+    if Wins then
+      BestIndex := Index;
+  end;
+
+  if BestIndex < 0 then
+  begin
+    Result := False;
+    Exit;
+  end;
+
+  Handler := FRegistrations[BestIndex].Handler;
+  Result := True;
+end;
+
+class function TLayoutBlockOverrideRegistry.IsRegistered(const Name: string; const Priority: Integer): Boolean;
+var
+  Registration: TRegistration;
+  IsMatch: Boolean;
+begin
+  for Registration in FRegistrations do
+  begin
+    IsMatch := ((Registration.Priority = Priority) and (Registration.Handler.Name = Name));
+    if IsMatch then
+      Exit(True);
+  end;
+
+  Result := False;
+end;
+
+class procedure TLayoutBlockOverrideRegistry.Clear;
+begin
+  FRegistrations := nil;
+  FNextOrdinal := 0;
+end;
+
+class procedure TLayoutDocumentProcessorRegistry.Register(const Name: string;
+  const Processor: IMarkdownDocumentProcessor);
+var
+  Registration: TRegistration;
+begin
+  Registration := Default(TRegistration);
+  Registration.Name := Name;
+  Registration.Processor := Processor;
+
+  FRegistrations := FRegistrations + [Registration];
+end;
+
+class procedure TLayoutDocumentProcessorRegistry.Process(const Document: IMarkdownDocument;
+  const Errors: IMarkdownExtensionErrorSink);
+var
+  Registration: TRegistration;
+begin
+  if Document = nil then
+    Exit;
+
+  for Registration in FRegistrations do
+  begin
+    RunProcessor(Registration, Document, Errors);
+  end;
+end;
+
+// Extension code may fail on any input, so every exception counts.
+class procedure TLayoutDocumentProcessorRegistry.RunProcessor(const Registration: TRegistration;
+  const Document: IMarkdownDocument; const Errors: IMarkdownExtensionErrorSink);
+begin
+  try
+    Registration.Processor.Process(Document);
+  except
+    on Error: Exception do
+    begin
+      if not Assigned(Errors) then
+        raise;
+
+      Errors.ExtensionFailed(Registration.Name, Error);
+    end;
+  end;
+end;
+
+class procedure TLayoutDocumentProcessorRegistry.Clear;
+begin
+  FRegistrations := nil;
+end;
+
+end.

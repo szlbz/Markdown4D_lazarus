@@ -1,0 +1,234 @@
+{$mode delphiunicode}{$modeswitch typeinquiry}
+{$modeswitch advancedrecords}{$modeswitch anonymousfunctions}
+{$modeswitch functionreferences}{$modeswitch implicitfunctionspecialization}
+{$WARN 5024 off}{$WARN 5090 off}{$WARN 5091 off}{$WARN 5057 off}
+unit Markdown4D.Layout.DisplayList;
+
+{$SCOPEDENUMS ON}
+
+interface
+
+uses
+  Markdown4D.Ast.Interfaces,
+  Markdown4D.Layout.Interfaces,
+  Markdown4D.Compat.Str,
+  character;
+
+type
+  TDisplayItemKind = (TextRun, Rectangle, Line, Image, Checkbox, Wedge, Polygon, Disclosure, Scroller);
+
+  // What a text run is to the reader. Text is painted, selected, searched
+  // and copied. Drawing is painted only: a glyph that is part of a picture,
+  // such as a formula. Source is the opposite, never painted but selected and
+  // copied as one unit, so a formula copies as its markdown. Marker is the
+  // bullet or number of a list item: painted and copied like text, but not
+  // part of the item's line when a whole line is selected.
+  TDisplayTextRunRole = (Text, Drawing, Source, Marker);
+
+  // What stands between a text run and the text before it when a selection is
+  // copied as plain text. The order matters: of two joins that meet, the later
+  // in this list wins. None means the layout did not say; Adjacent means the
+  // run follows the text before it with nothing in between. A hard break
+  // copies as a line break, but keeps its paragraph one block when a whole
+  // line is selected.
+  TDisplayTextJoin = (None, Adjacent, Space, Tab, HardBreak, LineBreak, BlankLine);
+
+  IDisplayItem = interface
+    ['{4F8C2D16-A93B-4E75-8C02-D51B9E3A7F64}']
+    function GetKind: TDisplayItemKind;
+    function GetBounds: TLayoutRectF;
+    function GetNode: IMarkdownNode;
+    property Kind: TDisplayItemKind read GetKind;
+    property Bounds: TLayoutRectF read GetBounds;
+    property Node: IMarkdownNode read GetNode;
+  end;
+
+  IDisplayTextRun = interface(IDisplayItem)
+    ['{3B7F0D92-51C6-4E28-A80D-64F1B9E3C572}']
+    function GetText: string;
+    function GetFont: TMarkdownFontStyle;
+    function GetColor: TLayoutColor;
+    function GetBaseline: Single;
+    function GetStartOffset: Integer;
+    function GetSourceNode: IMarkdownNode;
+    function GetRole: TDisplayTextRunRole;
+    function GetJoin: TDisplayTextJoin;
+    function GetIndentLevel: Integer;
+    function Joined(const Join: TDisplayTextJoin; const IndentLevel: Integer): IDisplayTextRun;
+    property Text: string read GetText;
+    property Font: TMarkdownFontStyle read GetFont;
+    property Color: TLayoutColor read GetColor;
+    property Baseline: Single read GetBaseline;
+    // Where this run starts inside the literal of SourceNode, counted from 0.
+    property StartOffset: Integer read GetStartOffset;
+    // The inline node whose literal the characters come from. Node is the node
+    // the run is attributed to for styling and hit testing, which for a link is
+    // the link itself, while SourceNode stays the text leaf inside it.
+    property SourceNode: IMarkdownNode read GetSourceNode;
+    property Role: TDisplayTextRunRole read GetRole;
+    property Join: TDisplayTextJoin read GetJoin;
+    // How many list levels a run that starts a line is indented by when copied.
+    property IndentLevel: Integer read GetIndentLevel;
+  end;
+
+  IDisplayRectangle = interface(IDisplayItem)
+    ['{C7E92B48-3F51-4A06-B8D3-2E9647C1F0A5}']
+    function GetFillColor: TLayoutColor;
+    function GetStrokeColor: TLayoutColor;
+    function GetStrokeWidth: Single;
+    property FillColor: TLayoutColor read GetFillColor;
+    property StrokeColor: TLayoutColor read GetStrokeColor;
+    property StrokeWidth: Single read GetStrokeWidth;
+  end;
+
+  IDisplayLine = interface(IDisplayItem)
+    ['{5D30A8F2-7B64-4C19-A5E8-91F2C6D40B37}']
+    function GetStartPoint: TLayoutPointF;
+    function GetEndPoint: TLayoutPointF;
+    function GetColor: TLayoutColor;
+    function GetStrokeWidth: Single;
+    property StartPoint: TLayoutPointF read GetStartPoint;
+    property EndPoint: TLayoutPointF read GetEndPoint;
+    property Color: TLayoutColor read GetColor;
+    property StrokeWidth: Single read GetStrokeWidth;
+  end;
+
+  IDisplayImage = interface(IDisplayItem)
+    ['{E82C4B95-D107-4F63-BA29-6C58F3E1D7A4}']
+    function GetSource: string;
+    function GetAltText: string;
+    property Source: string read GetSource;
+    property AltText: string read GetAltText;
+  end;
+
+  IDisplayCheckbox = interface(IDisplayItem)
+    ['{1F6D93A7-42E8-4C50-8B16-A9D25C7E4F83}']
+    function GetChecked: Boolean;
+    property Checked: Boolean read GetChecked;
+  end;
+
+  IDisplayWedge = interface(IDisplayItem)
+    ['{2A8B4C61-7D39-4E52-9F04-B31C6E5A8D70}']
+    function GetCenter: TLayoutPointF;
+    function GetOuterRadius: Single;
+    function GetInnerRadius: Single;
+    function GetStartAngle: Single;
+    function GetSweepAngle: Single;
+    function GetFillColor: TLayoutColor;
+    function GetStrokeColor: TLayoutColor;
+    function GetStrokeWidth: Single;
+    property Center: TLayoutPointF read GetCenter;
+    property OuterRadius: Single read GetOuterRadius;
+    property InnerRadius: Single read GetInnerRadius;
+    property StartAngle: Single read GetStartAngle;
+    property SweepAngle: Single read GetSweepAngle;
+    property FillColor: TLayoutColor read GetFillColor;
+    property StrokeColor: TLayoutColor read GetStrokeColor;
+    property StrokeWidth: Single read GetStrokeWidth;
+  end;
+
+  IDisplayPolygon = interface(IDisplayItem)
+    ['{9C3E7A15-4B08-4D62-8F31-6A0D5B2E9C74}']
+    function GetPointCount: Integer;
+    function GetPoint(const Index: Integer): TLayoutPointF;
+    function GetFillColor: TLayoutColor;
+    function GetStrokeColor: TLayoutColor;
+    function GetStrokeWidth: Single;
+    property PointCount: Integer read GetPointCount;
+    property Points[const Index: Integer]: TLayoutPointF read GetPoint;
+    property FillColor: TLayoutColor read GetFillColor;
+    property StrokeColor: TLayoutColor read GetStrokeColor;
+    property StrokeWidth: Single read GetStrokeWidth;
+  end;
+
+  // The summary line of a <details> section: Bounds is where a click opens or
+  // closes it, Marker the box its disclosure triangle is drawn in, pointing
+  // right while the section is closed and down while it is open. Key is the
+  // source offset of the block that opens the section.
+  IDisplayDisclosure = interface(IDisplayItem)
+    ['{E9946225-ACAA-4603-A484-BB6BE9FEFDE3}']
+    function GetKey: Integer;
+    function GetIsOpen: Boolean;
+    function GetMarker: TLayoutRectF;
+    function GetColor: TLayoutColor;
+    property Key: Integer read GetKey;
+    property IsOpen: Boolean read GetIsOpen;
+    property Marker: TLayoutRectF read GetMarker;
+    property Color: TLayoutColor read GetColor;
+  end;
+
+  // A block wider than its column, such as a long display formula, that
+  // scrolls sideways the way browsers let it. The ItemCount items right after
+  // it are its content: they are clipped to Bounds and already moved left by
+  // Offset, which the viewer changes as the reader scrolls. ContentWidth is
+  // how wide the content is; Track is the strip along the bottom of Bounds
+  // that shows how far it is scrolled, and Thumb the part of it that stands
+  // for what is in view. Key is the source offset of the block, so the
+  // offset survives a new layout.
+  IDisplayScroller = interface(IDisplayItem)
+    ['{7C1E0B52-3F9A-4D6E-B8A1-5D2F7E9C4A30}']
+    function GetItemCount: Integer;
+    function GetContentWidth: Single;
+    function GetOffset: Single;
+    function GetKey: Integer;
+    function GetTrack: TLayoutRectF;
+    function GetThumb: TLayoutRectF;
+    function GetMaxOffset: Single;
+    function WithOffset(const Offset: Single): IDisplayScroller;
+    property ItemCount: Integer read GetItemCount;
+    property ContentWidth: Single read GetContentWidth;
+    property Offset: Single read GetOffset;
+    property Key: Integer read GetKey;
+    property Track: TLayoutRectF read GetTrack;
+    property Thumb: TLayoutRectF read GetThumb;
+    property MaxOffset: Single read GetMaxOffset;
+  end;
+
+  TLayoutBlockInfo = record
+    FirstItemIndex: Integer;
+    ItemCount: Integer;
+    Top: Single;
+    Height: Single;
+    SpacingAbove: Single;
+    SpacingBelow: Single;
+    class function Create(const FirstItemIndex, ItemCount: Integer;
+      const Top, Height, SpacingAbove, SpacingBelow: Single): TLayoutBlockInfo; static;
+  end;
+
+  IMarkdownDisplayList = interface
+    ['{D16A4C83-2E97-4B50-9CF2-08B5E7A3D164}']
+    function GetItemCount: Integer;
+    function GetItem(const Index: Integer): IDisplayItem;
+    function GetWidth: Single;
+    function GetContentWidth: Single;
+    function GetHeight: Single;
+    function GetBlockCount: Integer;
+    function GetBlockInfo(const Index: Integer): TLayoutBlockInfo;
+    function GetRecomputedBlockIndexes: TArray<Integer>;
+    // Scrolls the scroller at Index to Offset, kept between 0 and its
+    // MaxOffset, and moves its content along.
+    procedure SetScrollerOffset(const Index: Integer; const Offset: Single);
+    property ItemCount: Integer read GetItemCount;
+    property Items[const Index: Integer]: IDisplayItem read GetItem;
+    property Width: Single read GetWidth;
+    property ContentWidth: Single read GetContentWidth;
+    property Height: Single read GetHeight;
+    property BlockCount: Integer read GetBlockCount;
+    property BlockInfos[const Index: Integer]: TLayoutBlockInfo read GetBlockInfo;
+    property RecomputedBlockIndexes: TArray<Integer> read GetRecomputedBlockIndexes;
+  end;
+
+implementation
+
+class function TLayoutBlockInfo.Create(const FirstItemIndex, ItemCount: Integer;
+  const Top, Height, SpacingAbove, SpacingBelow: Single): TLayoutBlockInfo;
+begin
+  Result.FirstItemIndex := FirstItemIndex;
+  Result.ItemCount := ItemCount;
+  Result.Top := Top;
+  Result.Height := Height;
+  Result.SpacingAbove := SpacingAbove;
+  Result.SpacingBelow := SpacingBelow;
+end;
+
+end.
