@@ -1,4 +1,5 @@
-<img src="logo.png" align="right" width="128" alt="Markdown4D logo"/>
+# 这版本是lazarus专用版本，在fpc trunk（3.3.1）+lazarus 4.8测试通过  
+img src="logo.png" align="right" width="128" alt="Markdown4D logo"/>
 
 # Markdown4D
 
