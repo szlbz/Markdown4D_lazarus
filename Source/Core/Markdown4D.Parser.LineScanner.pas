@@ -1,0 +1,255 @@
+{$mode delphiunicode}{$modeswitch typeinquiry}
+{$modeswitch advancedrecords}{$modeswitch anonymousfunctions}
+{$modeswitch functionreferences}{$modeswitch implicitfunctionspecialization}
+{$WARN 5024 off}{$WARN 5090 off}{$WARN 5091 off}{$WARN 5057 off}
+unit Markdown4D.Parser.LineScanner;
+
+{$SCOPEDENUMS ON}
+
+interface
+
+type
+  TLineScannerState = record
+    Index: Integer;
+    Column: Integer;
+    PartiallyConsumedTab: Boolean;
+  end;
+
+  TLineScanner = class
+  private
+    const
+      TabStop = 4;
+    var
+      FLine: string;
+      FIndex: Integer;
+      FColumn: Integer;
+      FPartiallyConsumedTab: Boolean;
+      FNextNonSpaceIndex: Integer;
+      FNextNonSpaceColumn: Integer;
+    class function ColumnAfterTab(const Column: Integer): Integer;
+
+  public
+    class function IsSpaceOrTab(const Value: Char): Boolean;
+    procedure Reset(const Line: string);
+    procedure FindNextNonSpace;
+    function Indent: Integer;
+    function IsBlank: Boolean;
+    function NextChar: Char;
+    function CharAt(const Index: Integer): Char;
+    procedure AdvanceOffset(const Count: Integer; const ByColumns: Boolean);
+    procedure AdvanceNextNonSpace;
+    procedure AdvanceToLineEnd;
+    function RestOfLine: string;
+    function TextFrom(const Index: Integer): string;
+    function IsBlankFrom(const Index: Integer): Boolean;
+    function SaveState: TLineScannerState;
+    procedure RestoreState(const State: TLineScannerState);
+    property Line: string read FLine;
+    property Offset: Integer read FIndex;
+    property Column: Integer read FColumn;
+    property NextNonSpaceIndex: Integer read FNextNonSpaceIndex;
+  end;
+
+implementation
+
+uses
+  Markdown4D.Defines,
+  Markdown4D.Compat.Str,
+  character;
+
+procedure TLineScanner.Reset(const Line: string);
+begin
+  FLine := Line;
+  FIndex := 1;
+  FColumn := 0;
+  FPartiallyConsumedTab := False;
+
+  FindNextNonSpace;
+end;
+
+function TLineScanner.Indent: Integer;
+begin
+  Result := FNextNonSpaceColumn - FColumn;
+end;
+
+function TLineScanner.IsBlank: Boolean;
+begin
+  Result := (FNextNonSpaceIndex > Length(FLine));
+end;
+
+function TLineScanner.NextChar: Char;
+begin
+  if IsBlank then
+  begin
+    Result := #0;
+    Exit;
+  end;
+
+  Result := FLine[FNextNonSpaceIndex];
+end;
+
+function TLineScanner.CharAt(const Index: Integer): Char;
+var
+  OutOfRange: Boolean;
+begin
+  OutOfRange := (Index < 1) or (Index > Length(FLine));
+  if OutOfRange then
+  begin
+    Result := #0;
+    Exit;
+  end;
+
+  Result := FLine[Index];
+end;
+
+procedure TLineScanner.AdvanceNextNonSpace;
+begin
+  FIndex := FNextNonSpaceIndex;
+  FColumn := FNextNonSpaceColumn;
+  FPartiallyConsumedTab := False;
+end;
+
+procedure TLineScanner.AdvanceToLineEnd;
+begin
+  AdvanceOffset(Length(FLine) - FIndex + 1, False);
+end;
+
+procedure TLineScanner.AdvanceOffset(const Count: Integer; const ByColumns: Boolean);
+var
+  Remaining: Integer;
+  Current: Char;
+  CharsToTab: Integer;
+  CharsToAdvance: Integer;
+begin
+  Remaining := Count;
+
+  while (Remaining > 0) and (FIndex <= Length(FLine)) do
+  begin
+    Current := FLine[FIndex];
+
+    if Current = Tab then
+    begin
+      CharsToTab := ColumnAfterTab(FColumn) - FColumn;
+
+      if ByColumns then
+      begin
+        FPartiallyConsumedTab := (CharsToTab > Remaining);
+
+        CharsToAdvance := CharsToTab;
+        if FPartiallyConsumedTab then
+          CharsToAdvance := Remaining;
+
+        Inc(FColumn, CharsToAdvance);
+        Dec(Remaining, CharsToAdvance);
+
+        if not FPartiallyConsumedTab then
+          Inc(FIndex);
+      end
+      else
+      begin
+        FPartiallyConsumedTab := False;
+        Inc(FColumn, CharsToTab);
+        Inc(FIndex);
+        Dec(Remaining);
+      end;
+    end
+    else
+    begin
+      FPartiallyConsumedTab := False;
+      Inc(FIndex);
+      Inc(FColumn);
+      Dec(Remaining);
+    end;
+  end;
+
+  FindNextNonSpace;
+end;
+
+function TLineScanner.RestOfLine: string;
+var
+  CharsToTab: Integer;
+begin
+  if FPartiallyConsumedTab then
+  begin
+    CharsToTab := ColumnAfterTab(FColumn) - FColumn;
+
+    Result := StringOfChar(Space, CharsToTab) + Copy(FLine, FIndex + 1, MaxInt);
+    Exit;
+  end;
+
+  Result := Copy(FLine, FIndex, MaxInt);
+end;
+
+function TLineScanner.TextFrom(const Index: Integer): string;
+begin
+  Result := Copy(FLine, Index, MaxInt);
+end;
+
+// Answers what TextFrom(Index).Trim = '' answers, without copying the tail of
+// the line. A single line can open thousands of nested list items, and one copy
+// per item turns parsing into quadratic work.
+function TLineScanner.IsBlankFrom(const Index: Integer): Boolean;
+var
+  Position: Integer;
+begin
+  for Position := Index to Length(FLine) do
+  begin
+    if not IsSpaceOrTab(FLine[Position]) then
+    begin
+      Result := False;
+      Exit;
+    end;
+  end;
+
+  Result := True;
+end;
+
+function TLineScanner.SaveState: TLineScannerState;
+begin
+  Result.Index := FIndex;
+  Result.Column := FColumn;
+  Result.PartiallyConsumedTab := FPartiallyConsumedTab;
+end;
+
+procedure TLineScanner.RestoreState(const State: TLineScannerState);
+begin
+  FIndex := State.Index;
+  FColumn := State.Column;
+  FPartiallyConsumedTab := State.PartiallyConsumedTab;
+
+  FindNextNonSpace;
+end;
+
+procedure TLineScanner.FindNextNonSpace;
+var
+  Index: Integer;
+  Column: Integer;
+begin
+  Index := FIndex;
+  Column := FColumn;
+
+  while (Index <= Length(FLine)) and IsSpaceOrTab(FLine[Index]) do
+  begin
+    if FLine[Index] = Tab then
+      Column := ColumnAfterTab(Column)
+    else
+      Inc(Column);
+
+    Inc(Index);
+  end;
+
+  FNextNonSpaceIndex := Index;
+  FNextNonSpaceColumn := Column;
+end;
+
+class function TLineScanner.IsSpaceOrTab(const Value: Char): Boolean;
+begin
+  Result := (Value = Space) or (Value = Tab);
+end;
+
+class function TLineScanner.ColumnAfterTab(const Column: Integer): Integer;
+begin
+  Result := Column + (TabStop - (Column mod TabStop));
+end;
+
+end.
